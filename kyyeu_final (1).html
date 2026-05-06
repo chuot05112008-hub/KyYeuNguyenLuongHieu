@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✈ KỶ YẾU 2026 – THƯ MỜI ĐẶC BIỆT</title>
+<style>
+/* ===================== RESET & BASE ===================== */
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:#0a0e1a;
+  color:#e8f4ff;
+  font-family:'Courier New',monospace;
+  overflow-x:hidden;
+  min-height:100vh;
+  cursor:default;
+}
+
+/* ===================== PIXEL FONT SIMULATION ===================== */
+.pixel{
+  font-family:'Courier New',monospace;
+  image-rendering:pixelated;
+  letter-spacing:2px;
+}
+
+/* ===================== CSS VARIABLES ===================== */
+:root{
+  --sky1:#0a0e1a;
+  --sky2:#0d1b3e;
+  --sky3:#1a2a5e;
+  --cloud:#ddeeff;
+  --plane-body:#e8f4ff;
+  --plane-wing:#b0d4ff;
+  --plane-stripe:#ff6b6b;
+  --letter-bg:#fff9e6;
+  --letter-border:#d4a843;
+  --gold:#ffd700;
+  --gold2:#ffaa00;
+  --green1:#00ff88;
+  --green2:#00cc66;
+  --red1:#ff4444;
+  --pixel-shadow:4px 4px 0 rgba(0,0,0,0.5);
+  --panel:#0f1933;
+  --panel2:#1a2a4a;
+}
+
+/* ===================== STARS BACKGROUND ===================== */
+#stars{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1px 1px at 10% 15%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 35%, #aad 0%, transparent 100%),
+    radial-gradient(2px 2px at 40% 10%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 60%, #ccf 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 25%, #fff 0%, transparent 100%),
+    radial-gradient(2px 2px at 85% 45%, #adf 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 70%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 85%, #aad 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 80%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 90%, #ccf 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 75%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 5% 50%, #adf 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 45%, #fff 0%, transparent 100%),
+    radial-gradient(2px 2px at 20% 55%, #ffd 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 15%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 60%, #ccf 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 5%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 95%, #aad 0%, transparent 100%),
+    linear-gradient(180deg, #0a0e1a 0%, #0d1b3e 50%, #1a2a5e 100%);
+}
+
+/* ===================== PIXEL MOUNTAINS ===================== */
+#mountains{
+  position:fixed;bottom:0;left:0;width:100%;z-index:1;pointer-events:none;
+}
+
+/* ===================== MAIN CANVAS AREA ===================== */
+#gameCanvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:2;pointer-events:none;
+}
+
+/* ===================== UI LAYER ===================== */
+#uiLayer{
+  position:relative;z-index:10;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ===================== TOP HUD ===================== */
+#topHud{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 20px;
+  background:rgba(10,14,26,0.85);
+  border-bottom:2px solid #1e3a6e;
+  backdrop-filter:blur(8px);
+}
+.hud-left{display:flex;align-items:center;gap:12px;}
+.hud-logo{
+  font-size:11px;
+  font-weight:bold;
+  color:var(--gold);
+  letter-spacing:3px;
+  text-shadow:0 0 10px var(--gold);
+  text-transform:uppercase;
+}
+.hud-sep{color:#1e3a6e;font-size:18px;}
+.hud-date{
+  font-size:10px;
+  color:#7aa;
+  letter-spacing:2px;
+}
+.hud-right{display:flex;align-items:center;gap:8px;}
+#hudClock{
+  font-size:11px;
+  color:var(--green1);
+  letter-spacing:2px;
+  text-shadow:0 0 8px var(--green1);
+  min-width:70px;
+  text-align:right;
+}
+.hud-btn{
+  padding:5px 12px;
+  background:transparent;
+  border:1px solid #2a4a8a;
+  color:#7aacff;
+  font-family:'Courier New',monospace;
+  font-size:10px;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:all 0.15s;
+  text-transform:uppercase;
+  image-rendering:pixelated;
+}
+.hud-btn:hover{
+  background:#1a3a7a;
+  border-color:#5a8aff;
+  color:#fff;
+  box-shadow:0 0 8px rgba(90,138,255,0.5);
+}
+
+/* ===================== CENTER CONTENT ===================== */
+#centerContent{
+  display:flex;flex-direction:column;
+  align-items:center;
+  gap:20px;
+  padding:80px 20px 40px;
+  width:100%;
+}
+
+/* ===================== PIXEL TITLE ===================== */
+#pixelTitle{
+  text-align:center;
+  line-height:1;
+}
+.title-small{
+  font-size:clamp(9px,2vw,12px);
+  color:#7aacff;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:8px;
+  opacity:0;
+  animation:fadeIn 1s 0.5s forwards;
+}
+.title-big{
+  font-size:clamp(28px,6vw,64px);
+  font-weight:bold;
+  color:var(--gold);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  text-shadow:
+    4px 4px 0 #8b5e00,
+    0 0 30px rgba(255,215,0,0.4);
+  display:block;
+  opacity:0;
+  animation:pixelReveal 0.8s 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+.title-year{
+  font-size:clamp(18px,4vw,36px);
+  color:#aacfff;
+  letter-spacing:8px;
+  display:block;
+  margin-top:4px;
+  opacity:0;
+  animation:fadeIn 1s 1.2s forwards;
+}
+
+/* ===================== AIRPLANE SCENE ===================== */
+#planeScene{
+  position:relative;
+  width:min(700px,90vw);
+  height:180px;
+  overflow:hidden;
+}
+
+/* ===================== GROUND HINT TEXT ===================== */
+#hintText{
+  font-size:11px;
+  color:#5a7aaa;
+  letter-spacing:3px;
+  text-align:center;
+  opacity:0;
+  transition: opacity 0.5s;
+  position:fixed;
+  white-space:nowrap;
+}
+@keyframes blink{0%,100%{opacity:0.4}50%{opacity:1}}
+
+/* ===================== PIXEL ART - AIRPLANE (Canvas-rendered) ===================== */
+
+/* ===================== LETTER ENVELOPE ===================== */
+#letterEnvelope{
+  position:absolute;
+  width:120px;height:90px;
+  cursor:pointer;
+  display:none;
+  z-index:20;
+  transition:transform 0.1s;
+  filter:drop-shadow(0 8px 20px rgba(212,168,67,0.7));
+}
+#letterEnvelope:hover{transform:scale(1.1) rotate(-4deg) translateY(-4px);}
+#letterEnvelope canvas{image-rendering:pixelated;width:100%;height:100%;}
+
+/* ===================== LETTER MODAL ===================== */
+#letterOverlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.7);
+  z-index:500;
+  display:none;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+#letterOverlay.show{display:flex;}
+
+#letterCard{
+  position:relative;
+  width:min(480px,90vw);
+  background:var(--letter-bg);
+  border:4px solid var(--letter-border);
+  box-shadow:
+    8px 8px 0 #8b5e00,
+    0 0 40px rgba(212,168,67,0.3);
+  padding:36px 32px 28px;
+  font-family:'Courier New',monospace;
+  color:#2a1a00;
+  opacity:0;
+  transform:translateY(40px) rotate(-2deg);
+  transition:all 0.4s cubic-bezier(0.34,1.4,0.64,1);
+  image-rendering:pixelated;
+}
+#letterCard.open{opacity:1;transform:translateY(0) rotate(0deg);}
+
+/* Wax seal */
+.wax-seal{
+  position:absolute;top:-18px;right:20px;
+  width:36px;height:36px;
+  background:radial-gradient(circle at 40% 40%, #ff4444, #aa0000);
+  border-radius:50%;
+  border:3px solid #ff6666;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  box-shadow:2px 2px 0 #660000, 0 0 10px rgba(255,68,68,0.4);
+}
+
+.letter-stamp{
+  position:absolute;top:8px;right:8px;
+  width:44px;height:44px;
+  border:2px solid var(--letter-border);
+  background:#fff3cc;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:8px;
+  color:#8b5e00;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+}
+.letter-stamp-icon{font-size:18px;line-height:1;}
+
+.letter-postmark{
+  position:absolute;top:16px;right:62px;
+  font-size:7px;color:#8b5e00;
+  border:1px solid #c4934a;
+  border-radius:50%;
+  width:50px;height:50px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transform:rotate(-15deg);
+  opacity:0.7;
+  line-height:1.3;
+  text-align:center;
+}
+
+.letter-from{
+  font-size:9px;color:#8b5e00;
+  margin-bottom:12px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+.letter-to{
+  font-size:11px;font-weight:bold;
+  color:#2a1a00;margin-bottom:16px;
+  letter-spacing:1px;
+  border-bottom:1px dashed #d4a843;
+  padding-bottom:10px;
+}
+.letter-body{
+  font-size:clamp(11px,2.5vw,13px);
+  line-height:1.8;
+  color:#3a2800;
+  margin-bottom:20px;
+}
+.letter-body strong{color:#8b0000;font-weight:bold;}
+.letter-sig{
+  font-size:11px;
+  color:#8b5e00;
+  text-align:right;
+  font-style:italic;
+  margin-bottom:20px;
+  border-top:1px dashed #d4a843;
+  padding-top:12px;
+}
+
+/* ===================== NAME INPUT AREA ===================== */
+#nameSection{
+  border-top:2px solid var(--letter-border);
+  padding-top:16px;
+}
+#nameSection label{
+  font-size:10px;
+  color:#8b5e00;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:6px;
+}
+.input-row{display:flex;gap:8px;}
+#nameInput{
+  flex:1;
+  padding:8px 12px;
+  background:#fff;
+  border:2px solid var(--letter-border);
+  font-family:'Courier New',monospace;
+  font-size:13px;
+  color:#2a1a00;
+  letter-spacing:1px;
+  outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  box-shadow:2px 2px 0 #c4934a;
+}
+#nameInput:focus{
+  border-color:#aa6600;
+  box-shadow:2px 2px 0 #8b5000, 0 0 0 3px rgba(212,168,67,0.2);
+}
+#nameInput::placeholder{color:#c4934a;font-size:11px;}
+
+#sendBtn{
+  padding:8px 16px;
+  background:var(--letter-border);
+  border:2px solid #8b5e00;
+  color:#fff9e6;
+  font-family:'Courier New',monospace;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:1px;
+  cursor:pointer;
+  text-transform:uppercase;
+  box-shadow:2px 2px 0 #8b5e00;
+  transition:all 0.1s;
+  white-space:nowrap;
+}
+#sendBtn:hover{
+  background:#aa6600;
+  transform:translate(-1px,-1px);
+  box-shadow:3px 3px 0 #8b5e00;
+}
+#sendBtn:active{
+  transform:translate(2px,2px);
+  box-shadow:none;
+}
+#sendBtn:disabled{opacity:0.6;cursor:not-allowed;}
+.send-spinner{
+  display:inline-block;
+  width:10px;height:10px;
+  border:2px solid rgba(255,255,255,0.3);
+  border-top-color:#fff;
+  border-radius:50%;
+  animation:spin 0.6s linear infinite;
+  vertical-align:middle;
+  margin-right:4px;
+}
+
+.letter-close{
+  position:absolute;top:8px;left:8px;
+  background:none;border:none;
+  font-size:16px;cursor:pointer;
+  color:#8b5e00;
+  padding:4px 8px;
+  font-family:'Courier New',monospace;
+  transition:color 0.15s;
+}
+.letter-close:hover{color:#aa0000;}
+
+/* ===================== THANK YOU PAGE ===================== */
+#thankyouPage{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:600;
+  display:none;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:#0a0e1a;
+}
+#thankyouPage.show{display:flex;}
+.ty-content{
+  text-align:center;
+  animation:popUp 0.6s cubic-bezier(0.34,1.4,0.64,1) forwards;
+}
+.ty-flag{
+  font-size:clamp(60px,14vw,120px);
+  display:block;
+  margin-bottom:20px;
+  animation:flagWave 1s ease-in-out infinite;
+}
+.ty-title{
+  font-size:clamp(24px,5.5vw,52px);
+  font-weight:bold;
+  color:var(--gold);
+  letter-spacing:3px;
+  text-shadow:4px 4px 0 #8b5e00, 0 0 30px rgba(255,215,0,0.4);
+  margin-bottom:16px;
+}
+.ty-subtitle{
+  font-size:clamp(14px,3vw,20px);
+  color:#7aacff;
+  letter-spacing:2px;
+  margin-bottom:30px;
+}
+.ty-name{
+  font-size:clamp(28px,7vw,60px);
+  color:var(--green1);
+  font-weight:bold;
+  letter-spacing:4px;
+  text-shadow:0 0 20px var(--green1);
+  margin-bottom:12px;
+}
+.ty-info{
+  font-size:clamp(11px,2vw,15px);
+  color:#5a7aaa;
+  letter-spacing:2px;
+  margin-bottom:28px;
+}
+.ty-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.ty-btn{
+  padding:10px 24px;
+  font-family:'Courier New',monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  border:2px solid;
+  transition:all 0.15s;
+  font-weight:bold;
+}
+.ty-btn-primary{
+  background:var(--gold);
+  border-color:#8b5e00;
+  color:#2a1a00;
+  box-shadow:3px 3px 0 #8b5e00;
+}
+.ty-btn-primary:hover{
+  background:#ffaa00;
+  transform:translate(-1px,-1px);
+  box-shadow:4px 4px 0 #8b5e00;
+}
+.ty-btn-ghost{
+  background:transparent;
+  border-color:#2a4a8a;
+  color:#7aacff;
+}
+.ty-btn-ghost:hover{background:#1a3a7a;color:#fff;}
+
+/* ===================== PROFILE PAGE ===================== */
+#profilePage{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:400;
+  background:rgba(5,8,18,0.95);
+  display:none;flex-direction:column;
+  align-items:center;
+  padding:80px 20px 40px;
+  overflow-y:auto;
+  backdrop-filter:blur(10px);
+}
+#profilePage.show{display:flex;}
+
+.profile-header{
+  text-align:center;
+  margin-bottom:28px;
+  width:100%;
+}
+.profile-title{
+  font-size:clamp(16px,3.5vw,28px);
+  font-weight:bold;
+  color:var(--gold);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  text-shadow:4px 4px 0 #8b5e00;
+}
+.profile-subtitle{
+  font-size:10px;
+  color:#5a7aaa;
+  letter-spacing:3px;
+  margin-top:6px;
+}
+.profile-stats{
+  display:flex;gap:16px;justify-content:center;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+.stat-box{
+  padding:10px 20px;
+  background:var(--panel2);
+  border:1px solid #2a4a8a;
+  text-align:center;
+  min-width:100px;
+}
+.stat-num{
+  display:block;
+  font-size:clamp(20px,4vw,32px);
+  font-weight:bold;
+  color:var(--green1);
+  text-shadow:0 0 10px var(--green1);
+  letter-spacing:3px;
+}
+.stat-label{
+  font-size:9px;
+  color:#5a7aaa;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.profile-search{
+  width:min(400px,90vw);
+  margin-bottom:20px;
+  position:relative;
+}
+.profile-search input{
+  width:100%;
+  padding:10px 16px 10px 36px;
+  background:var(--panel2);
+  border:1px solid #2a4a8a;
+  color:#e8f4ff;
+  font-family:'Courier New',monospace;
+  font-size:12px;
+  letter-spacing:1px;
+  outline:none;
+  transition:border-color 0.2s;
+}
+.profile-search input:focus{border-color:#5a8aff;}
+.profile-search::before{
+  content:'🔍';
+  position:absolute;left:10px;top:50%;transform:translateY(-50%);
+  font-size:13px;pointer-events:none;
+}
+
+.name-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(160px,1fr));
+  gap:10px;
+  width:min(800px,90vw);
+  max-height:50vh;
+  overflow-y:auto;
+  padding-right:4px;
+}
+.name-grid::-webkit-scrollbar{width:4px;}
+.name-grid::-webkit-scrollbar-track{background:var(--panel);}
+.name-grid::-webkit-scrollbar-thumb{background:#2a4a8a;}
+
+.name-card{
+  padding:12px;
+  background:var(--panel2);
+  border:1px solid #1e3a6e;
+  display:flex;align-items:center;gap:10px;
+  transition:border-color 0.15s;
+  animation:rowSlideIn 0.3s ease both;
+}
+.name-card:hover{border-color:#5a8aff;}
+.name-avatar{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,#1a3a7a,#2a5a9a);
+  border:1px solid #5a8aff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:bold;
+  color:#7aacff;
+  flex-shrink:0;
+  text-transform:uppercase;
+  image-rendering:pixelated;
+}
+.name-info{flex:1;min-width:0;}
+.name-text{
+  font-size:11px;font-weight:bold;
+  color:#e8f4ff;
+  letter-spacing:0.5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.name-time{font-size:8px;color:#5a7aaa;letter-spacing:0.5px;margin-top:2px;}
+
+.profile-empty{
+  font-size:12px;color:#3a5a8a;letter-spacing:2px;
+  text-align:center;padding:40px;
+}
+
+.profile-close{
+  margin-top:24px;
+  padding:10px 28px;
+  background:transparent;
+  border:1px solid #2a4a8a;
+  color:#7aacff;
+  font-family:'Courier New',monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.15s;
+}
+.profile-close:hover{background:#1a3a7a;border-color:#5a8aff;color:#fff;}
+
+/* ===================== FX CANVAS ===================== */
+#fxCanvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:50;pointer-events:none;
+}
+
+/* ===================== PIXEL DECORATIONS ===================== */
+.pixel-cloud{
+  position:absolute;
+  image-rendering:pixelated;
+  opacity:0.7;
+  pointer-events:none;
+}
+
+/* ===================== TWINKLING STARS ===================== */
+.twinkle-star{
+  position:fixed;
+  pointer-events:none;
+  z-index:1;
+  border-radius:50%;
+  background:#fff;
+  animation:twinkleAnim var(--dur,2s) var(--delay,0s) ease-in-out infinite;
+}
+@keyframes twinkleAnim{
+  0%,100%{opacity:0.1;transform:scale(0.6);}
+  50%{opacity:1;transform:scale(1.3);}
+}
+
+/* ===================== SCROLL TICKER — HIDDEN ===================== */
+#ticker{display:none!important;}
+
+/* ===================== ADMIN PAGE ===================== */
+#adminPage{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:700;
+  background:rgba(5,8,18,0.97);
+  display:none;flex-direction:column;
+  align-items:center;
+  padding:60px 20px 40px;
+  overflow-y:auto;
+}
+#adminPage.show{display:flex;}
+
+.admin-header{
+  text-align:center;
+  margin-bottom:24px;
+}
+.admin-title{
+  font-size:clamp(14px,3vw,22px);
+  font-weight:bold;
+  color:var(--green1);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  text-shadow:0 0 15px var(--green1);
+}
+
+.admin-login-box{
+  width:min(360px,90vw);
+  background:var(--panel2);
+  border:1px solid #2a4a8a;
+  padding:24px;
+}
+.admin-login-box label{
+  display:block;
+  font-size:10px;
+  color:#5a7aaa;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+#adminPassInput{
+  width:100%;
+  padding:10px 12px;
+  background:var(--panel);
+  border:1px solid #2a4a8a;
+  color:#e8f4ff;
+  font-family:'Courier New',monospace;
+  font-size:14px;
+  letter-spacing:4px;
+  outline:none;
+  margin-bottom:12px;
+}
+#adminErr{font-size:11px;color:#ff4444;min-height:16px;margin-bottom:8px;letter-spacing:1px;}
+.admin-btn{
+  width:100%;
+  padding:10px;
+  background:var(--green2);
+  border:2px solid #009944;
+  color:#001a00;
+  font-family:'Courier New',monospace;
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  box-shadow:2px 2px 0 #009944;
+  transition:all 0.1s;
+}
+.admin-btn:hover{background:var(--green1);transform:translate(-1px,-1px);box-shadow:3px 3px 0 #009944;}
+
+.admin-panel{
+  width:min(700px,90vw);
+  display:none;flex-direction:column;gap:16px;
+}
+.admin-stats-row{display:flex;gap:12px;flex-wrap:wrap;}
+.admin-stat{
+  flex:1;min-width:100px;
+  padding:12px 16px;
+  background:var(--panel2);
+  border:1px solid #2a4a8a;
+}
+.admin-stat-num{
+  display:block;font-size:22px;font-weight:bold;
+  color:var(--green1);text-shadow:0 0 8px var(--green1);letter-spacing:2px;
+}
+.admin-stat-label{font-size:9px;color:#5a7aaa;letter-spacing:1.5px;text-transform:uppercase;}
+
+.admin-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.admin-action-btn{
+  flex:1;min-width:120px;
+  padding:8px 16px;
+  font-family:'Courier New',monospace;
+  font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;border:1px solid;
+  transition:all 0.15s;
+}
+.btn-export{background:transparent;border-color:#ffaa00;color:#ffaa00;}
+.btn-export:hover{background:#ffaa00;color:#000;}
+.btn-refresh{background:transparent;border-color:#7aacff;color:#7aacff;}
+.btn-refresh:hover{background:#1a3a7a;color:#fff;}
+.btn-sheets{background:transparent;border-color:var(--green1);color:var(--green1);}
+.btn-sheets:hover{background:#003322;color:var(--green1);}
+.btn-close-admin{background:transparent;border-color:#ff4444;color:#ff4444;}
+.btn-close-admin:hover{background:#3a0000;color:#fff;}
+
+.admin-search{width:100%;}
+.admin-search input{
+  width:100%;padding:8px 12px;
+  background:var(--panel);border:1px solid #2a4a8a;
+  color:#e8f4ff;font-family:'Courier New',monospace;font-size:12px;
+  letter-spacing:1px;outline:none;
+}
+.admin-search input:focus{border-color:#5a8aff;}
+
+.admin-table-wrap{
+  max-height:40vh;overflow-y:auto;
+  border:1px solid #1e3a6e;
+}
+.admin-table-wrap::-webkit-scrollbar{width:4px;}
+.admin-table-wrap::-webkit-scrollbar-track{background:var(--panel);}
+.admin-table-wrap::-webkit-scrollbar-thumb{background:#2a4a8a;}
+
+table.admin-table{
+  width:100%;border-collapse:collapse;
+  font-size:11px;
+}
+.admin-table th{
+  background:var(--panel2);
+  padding:8px 12px;
+  color:#5a7aaa;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-size:9px;
+  text-align:left;
+  position:sticky;top:0;
+  border-bottom:1px solid #2a4a8a;
+}
+.admin-table td{
+  padding:8px 12px;
+  border-bottom:1px solid #111827;
+  color:#e8f4ff;
+}
+.admin-table tr:hover td{background:rgba(30,58,110,0.3);}
+.td-num{color:#5a7aaa;width:40px;}
+.td-name-wrap{display:flex;align-items:center;gap:8px;}
+.td-avatar{
+  width:24px;height:24px;
+  background:#1a3a7a;
+  border:1px solid #5a8aff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:bold;color:#7aacff;
+  flex-shrink:0;text-transform:uppercase;
+}
+.td-time{font-size:9px;color:#5a7aaa;}
+
+/* ===================== KEYFRAMES ===================== */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pixelReveal{
+  0%{opacity:0;transform:scale(0.8);filter:blur(4px)}
+  100%{opacity:1;transform:scale(1);filter:blur(0)}
+}
+@keyframes popUp{
+  0%{opacity:0;transform:scale(0.6) translateY(40px)}
+  100%{opacity:1;transform:scale(1) translateY(0)}
+}
+@keyframes flagWave{
+  0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes rowSlideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes confettiFall{
+  0%{transform:translateY(-10px) rotate(0deg);opacity:1}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0}
+}
+@keyframes planeEnter{
+  0%{transform:translateX(-120px)}
+  100%{transform:translateX(0)}
+}
+
+/* ===================== GOOGLE SHEETS INFO BANNER ===================== */
+#sheetsBanner{
+  position:fixed;bottom:36px;left:50%;transform:translateX(-50%);
+  z-index:200;
+  background:rgba(0,30,0,0.9);
+  border:1px solid var(--green1);
+  padding:8px 16px;
+  font-size:10px;
+  color:var(--green1);
+  letter-spacing:1.5px;
+  text-align:center;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 0.3s;
+  max-width:90vw;
+}
+#sheetsBanner.show{opacity:1;}
+
+/* ===================== RESPONSIVE ===================== */
+@media(max-width:480px){
+  .input-row{flex-direction:column;}
+  #sendBtn{width:100%;}
+  #letterCard{padding:24px 18px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- STARS BG -->
+<div id="stars"></div>
+
+<!-- PIXEL MOUNTAINS SVG -->
+<svg id="mountains" viewBox="0 0 1440 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="160">
+  <!-- Pixel mountain style using rectangles -->
+  <rect x="0" y="140" width="1440" height="20" fill="#0d1a0d"/>
+  <rect x="0" y="120" width="1440" height="20" fill="#0a1600"/>
+  <!-- Mountain 1 -->
+  <polygon points="0,120 60,40 120,120" fill="#0f2a0f"/>
+  <polygon points="40,120 100,20 160,120" fill="#143214"/>
+  <polygon points="100,120 170,50 240,120" fill="#0f2a0f"/>
+  <!-- Mountain 2 -->
+  <polygon points="200,120 290,10 380,120" fill="#112a11"/>
+  <polygon points="260,120 360,30 460,120" fill="#162e16"/>
+  <!-- Mountain 3 -->
+  <polygon points="380,120 460,55 540,120" fill="#0f2a0f"/>
+  <polygon points="430,120 520,25 610,120" fill="#1a361a"/>
+  <!-- Mountain 4 -->
+  <polygon points="560,120 660,15 760,120" fill="#113011"/>
+  <polygon points="640,120 730,40 820,120" fill="#0f2a0f"/>
+  <!-- Mountain 5 -->
+  <polygon points="780,120 870,20 960,120" fill="#143214"/>
+  <polygon points="840,120 940,50 1040,120" fill="#0f2a0f"/>
+  <!-- Mountain 6 -->
+  <polygon points="980,120 1060,35 1140,120" fill="#112a11"/>
+  <polygon points="1040,120 1140,10 1240,120" fill="#162e16"/>
+  <!-- Mountain 7 -->
+  <polygon points="1180,120 1270,45 1360,120" fill="#0f2a0f"/>
+  <polygon points="1260,120 1360,30 1440,120" fill="#113011"/>
+  <!-- Pixel grid overlay -->
+  <rect x="0" y="100" width="1440" height="4" fill="rgba(0,255,100,0.05)"/>
+  <rect x="0" y="110" width="1440" height="2" fill="rgba(0,255,100,0.03)"/>
+</svg>
+
+<!-- GAME CANVAS (pixel plane animation) -->
+<canvas id="gameCanvas"></canvas>
+
+<!-- FX CANVAS (confetti) -->
+<canvas id="fxCanvas"></canvas>
+
+<!-- TOP HUD -->
+<div id="topHud">
+  <div class="hud-left">
+    <div class="hud-logo">✈ KỶ YẾU 2026</div>
+    <div class="hud-sep">|</div>
+    <div class="hud-date">16.05.2026</div>
+  </div>
+  <div class="hud-right">
+    <div id="hudClock">00:00:00</div>
+    <button class="hud-btn" onclick="openAdmin()">🔐 QUẢN LÝ</button>
+  </div>
+</div>
+
+<!-- MAIN UI -->
+<div id="uiLayer">
+  <div id="centerContent">
+
+    <!-- PIXEL TITLE -->
+    <div id="pixelTitle">
+      <span class="title-small">✦ THƯ MỜI CHÍNH THỨC ✦</span>
+      <span class="title-big">KỶ YẾU</span>
+      <span class="title-year">2 0 2 6</span>
+    </div>
+
+    <!-- PLANE SCENE (canvas) -->
+    <div id="planeScene"></div>
+
+    <!-- HINT -->
+    <div id="hintText">▼ BẤM VÀO LÁ THƯ ĐỂ XEM LỜI MỜI ▼</div>
+
+  </div>
+</div>
+
+<!-- ENVELOPE (click target, positioned by JS) -->
+<div id="letterEnvelope" onclick="openLetter()">
+  <canvas id="envCanvas" width="120" height="90"></canvas>
+</div>
+
+<!-- LETTER OVERLAY -->
+<div id="letterOverlay">
+  <div id="letterCard">
+    <button class="letter-close" onclick="closeLetter()">✕</button>
+    <div class="wax-seal">🎓</div>
+    <div class="letter-stamp"><span class="letter-stamp-icon">✈</span><span>AIR</span><span>MAIL</span></div>
+    <div class="letter-postmark">THPT<br>CHUYÊN<br>NTT<br>2026</div>
+
+    <div class="letter-from">TỪ: LỚP 12TIN — TRƯỜNG THPT CHUYÊN NTT</div>
+    <div class="letter-to">KÍNH GỬI: BẠN THÂN MẾN ✦</div>
+    <div class="letter-body">
+      Chúng mình trân trọng kính mời bạn tham gia chụp ảnh<br>
+      <strong>KỶ YẾU LỚP 12TIN</strong> — buổi chụp ảnh đặc biệt<br>
+      đánh dấu những năm tháng tuổi học trò đáng nhớ nhất.<br><br>
+      📅 <strong>Ngày:</strong> 16 tháng 05 năm 2026<br>
+      📍 <strong>Địa điểm:</strong> Trường THPT Chuyên NTT<br>
+      🎓 <strong>Lớp:</strong> 12TIN — Khóa 2024–2026<br><br>
+      Hãy đến và cùng nhau tạo nên những kỷ niệm<br>
+      đẹp nhất của một thời áo trắng! 💙
+    </div>
+    <div class="letter-sig">
+      Với tất cả tình thân,<br>
+      <em>Ban tổ chức Kỷ yếu 12TIN</em>
+    </div>
+
+    <!-- NAME INPUT -->
+    <div id="nameSection">
+      <label>✦ XÁC NHẬN THAM GIA — NHẬP TÊN CỦA BẠN:</label>
+      <div class="input-row">
+        <input type="text" id="nameInput" placeholder="Nguyễn Văn A..." maxlength="60"
+               onkeydown="if(event.key==='Enter')sendName()">
+        <button id="sendBtn" onclick="sendName()">GỬI ✈</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THANK YOU PAGE -->
+<div id="thankyouPage">
+  <div class="ty-content">
+    <span class="ty-flag">🚩</span>
+    <div class="ty-name" id="tyName">—</div>
+    <div class="ty-title">ĐÃ XÁC NHẬN THAM GIA!</div>
+    <div class="ty-subtitle">✦ CẢM ƠN BẠN RẤT NHIỀU ✦</div>
+    <div class="ty-info">Hẹn gặp bạn ngày 16.05.2026 tại trường THPT Chuyên NTT 🎓</div>
+    <div class="ty-actions">
+      <button class="ty-btn ty-btn-primary" onclick="restartPage()">← QUAY LẠI</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE PAGE -->
+<div id="profilePage">
+  <div class="profile-header">
+    <div class="profile-title">👥 DANH SÁCH THAM GIA</div>
+    <div class="profile-subtitle">NHỮNG NGƯỜI ĐÃ XÁC NHẬN</div>
+  </div>
+  <div class="profile-stats">
+    <div class="stat-box">
+      <span class="stat-num" id="statTotal">0</span>
+      <span class="stat-label">Tổng số</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" id="statToday">0</span>
+      <span class="stat-label">Hôm nay</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" id="statLatest">—</span>
+      <span class="stat-label">Mới nhất</span>
+    </div>
+  </div>
+  <div class="profile-search">
+    <input type="text" placeholder="Tìm tên..." id="profileSearch" oninput="filterProfile()">
+  </div>
+  <div class="name-grid" id="nameGrid">
+    <div class="profile-empty">✦ Chưa có ai đăng ký</div>
+  </div>
+  <button class="profile-close" onclick="closeProfile()">✕ ĐÓNG</button>
+</div>
+
+<!-- ADMIN PAGE -->
+<div id="adminPage">
+  <div class="admin-header">
+    <div class="admin-title">🔐 QUẢN LÝ KỶ YẾU</div>
+  </div>
+  <div id="adminLogin" class="admin-login-box">
+    <label>Mật khẩu quản trị:</label>
+    <input type="password" id="adminPassInput" placeholder="••••••••"
+           onkeydown="if(event.key==='Enter')adminLogin()">
+    <div id="adminErr"></div>
+    <button class="admin-btn" onclick="adminLogin()">ĐĂNG NHẬP</button>
+    <button class="admin-btn" style="margin-top:8px;background:transparent;border-color:#ff4444;color:#ff4444;box-shadow:none;" onclick="closeAdmin()">✕ ĐÓNG</button>
+  </div>
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-stats-row">
+      <div class="admin-stat">
+        <span class="admin-stat-num" id="adminCount">0</span>
+        <span class="admin-stat-label">Tổng đăng ký</span>
+      </div>
+      <div class="admin-stat">
+        <span class="admin-stat-num" id="adminToday">0</span>
+        <span class="admin-stat-label">Hôm nay</span>
+      </div>
+      <div class="admin-stat">
+        <span class="admin-stat-num" id="adminLatest">—</span>
+        <span class="admin-stat-label">Mới nhất</span>
+      </div>
+    </div>
+    <div class="admin-actions">
+      <button class="admin-action-btn btn-export" onclick="exportCSV()">📥 XUẤT CSV</button>
+      <button class="admin-action-btn btn-sheets" onclick="openSheets()">📊 MỞ SHEETS</button>
+      <button class="admin-action-btn btn-refresh" onclick="refreshAdmin()">🔄 TẢI LẠI</button>
+      <button class="admin-action-btn btn-close-admin" onclick="closeAdmin()">✕ ĐÓNG</button>
+    </div>
+    <div class="admin-search">
+      <input type="text" id="adminSearch" placeholder="Tìm kiếm tên..." oninput="filterAdmin()">
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>#</th><th>Tên</th><th>Thời gian</th></tr></thead>
+        <tbody id="adminBody"></tbody>
+      </table>
+    </div>
+    <div style="font-size:9px;color:#3a5a8a;text-align:center;letter-spacing:1px;margin-top:8px;">
+      DỮ LIỆU ĐƯỢC LƯU TRÊN GOOGLE SHEETS
+    </div>
+
+    <!-- SHEETS URL INPUT -->
+    <div style="background:var(--panel);border:1px solid #2a4a8a;padding:14px;margin-top:4px;">
+      <div style="font-size:10px;color:var(--gold);letter-spacing:2px;font-weight:bold;margin-bottom:8px;">📊 CÀI ĐẶT GOOGLE SHEETS</div>
+      <label style="font-size:9px;color:#5a7aaa;letter-spacing:1px;display:block;margin-bottom:6px;">DÁN URL APPS SCRIPT VÀO ĐÂY:</label>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="sheetsUrlInput" placeholder="https://script.google.com/macros/s/.../exec"
+          style="flex:1;padding:8px 10px;background:#050810;border:1px solid #2a4a8a;color:#e8f4ff;font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.5px;outline:none;"
+          onkeydown="if(event.key==='Enter')saveSheetUrl()">
+        <button onclick="saveSheetUrl()" style="padding:8px 14px;background:var(--green2);border:2px solid #009944;color:#001a00;font-family:'Courier New',monospace;font-size:10px;font-weight:bold;letter-spacing:1px;cursor:pointer;white-space:nowrap;">LƯU ✓</button>
+      </div>
+      <div id="sheetUrlStatus" style="font-size:9px;margin-top:6px;letter-spacing:1px;min-height:14px;"></div>
+    </div>
+
+    <!-- SHEETS GUIDE -->
+    <div id="sheetsGuide" style="font-size:10px;color:#5a7aaa;background:var(--panel);border:1px solid #2a4a8a;padding:14px;letter-spacing:0.5px;line-height:2;">
+      <div style="color:var(--gold);font-weight:bold;letter-spacing:2px;margin-bottom:8px;">📌 HƯỚNG DẪN TÍCH HỢP GOOGLE SHEETS</div>
+      <b style="color:#aacfff;">BƯỚC 1</b> — Tạo Google Spreadsheet<br>
+      &nbsp;&nbsp;→ Vào <a href="https://sheets.google.com" target="_blank" style="color:var(--green1)">sheets.google.com</a> → Tạo sheet mới<br>
+      &nbsp;&nbsp;→ Đặt tên: <span style="color:#ffaa00;">KY_YEU_2026</span><br><br>
+      <b style="color:#aacfff;">BƯỚC 2</b> — Tạo Apps Script<br>
+      &nbsp;&nbsp;→ Trong sheet: <b>Extensions</b> → <b>Apps Script</b><br>
+      &nbsp;&nbsp;→ Xóa code cũ, dán code bên dưới vào<br>
+      &nbsp;&nbsp;→ Nhấn <b style="color:#ffaa00;">Save</b> (Ctrl+S)<br><br>
+      <b style="color:#aacfff;">BƯỚC 3</b> — Deploy<br>
+      &nbsp;&nbsp;→ Nhấn <b>Deploy</b> → <b>New deployment</b><br>
+      &nbsp;&nbsp;→ Type: <b style="color:#ffaa00;">Web app</b><br>
+      &nbsp;&nbsp;→ Execute as: <b style="color:#ffaa00;">Me</b><br>
+      &nbsp;&nbsp;→ Who has access: <b style="color:#ffaa00;">Anyone</b><br>
+      &nbsp;&nbsp;→ Nhấn <b>Deploy</b> → Copy URL<br><br>
+      <b style="color:#aacfff;">BƯỚC 4</b> — Dán URL vào ô bên trên → Nhấn <b style="color:var(--green1)">LƯU ✓</b><br><br>
+      <b style="color:#aacfff;">BƯỚC 5</b> — Xem danh sách tên<br>
+      &nbsp;&nbsp;→ Mở <a href="https://sheets.google.com" target="_blank" style="color:var(--green1)">sheets.google.com</a><br>
+      &nbsp;&nbsp;→ Mở file <b style="color:#ffaa00;">KY_YEU_2026</b><br>
+      &nbsp;&nbsp;→ Tên sẽ tự động xuất hiện ở cột <b style="color:#ffaa00;">B</b>, thời gian ở cột <b style="color:#ffaa00;">C</b>
+    </div>
+
+    <!-- APPS SCRIPT CODE -->
+    <div style="position:relative;">
+      <div style="font-size:9px;color:var(--gold);letter-spacing:1px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;">
+        <span>📋 CODE DÁN VÀO APPS SCRIPT:</span>
+        <button onclick="copyAppsScript()" style="padding:3px 10px;background:transparent;border:1px solid #ffaa00;color:#ffaa00;font-family:'Courier New',monospace;font-size:9px;cursor:pointer;letter-spacing:1px;">COPY</button>
+      </div>
+      <div id="appsScriptCode" style="font-size:9px;color:#3a6aaa;background:#050810;border:1px solid #1e3a6e;padding:12px;letter-spacing:0.5px;line-height:1.7;max-height:200px;overflow-y:auto;font-family:'Courier New',monospace;white-space:pre;">function doGet(e) {
+  var name = e.parameter.name || "";
+  var time = e.parameter.time || new Date().toLocaleString("vi-VN");
+  if (name) {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheets()[0];
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["STT", "Tên", "Thời gian"]);
+    }
+    var row = sheet.getLastRow();
+    sheet.appendRow([row, name, time]);
+  }
+  return ContentService.createTextOutput("OK")
+    .setMimeType(ContentService.MimeType.TEXT);
+}</div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div id="ticker">
+  <div class="ticker-inner" id="tickerInner"></div>
+</div>
+
+<!-- SHEETS BANNER -->
+<div id="sheetsBanner"></div>
+
+<!-- CREDIT -->
+<div style="position:fixed;bottom:10px;right:16px;z-index:200;font-family:'Courier New',monospace;font-size:10px;color:rgba(90,122,170,0.7);letter-spacing:2px;pointer-events:none;text-shadow:0 0 8px rgba(90,122,170,0.4);">
+  ✦ CRE: <span style="color:rgba(255,215,0,0.75);font-weight:bold;">VuQuan</span>
+</div>
+
+<script>
+// =====================================================
+// TWINKLING STARS
+// =====================================================
+(function(){
+  var colors = ['#ffffff','#fffacd','#aaddff','#ffd700','#ccccff','#ffccaa'];
+  for(var i=0;i<60;i++){
+    var star = document.createElement('div');
+    star.className = 'twinkle-star';
+    var size = 1 + Math.random()*3;
+    var dur = (1.2 + Math.random()*3).toFixed(2);
+    var delay = (Math.random()*5).toFixed(2);
+    star.style.cssText = [
+      'width:'+size+'px',
+      'height:'+size+'px',
+      'left:'+(Math.random()*100)+'%',
+      'top:'+(Math.random()*85)+'%',
+      '--dur:'+dur+'s',
+      '--delay:'+delay+'s',
+      'background:'+colors[Math.floor(Math.random()*colors.length)],
+      'box-shadow:0 0 '+(size*2)+'px '+(size)+'px '+colors[Math.floor(Math.random()*colors.length)]
+    ].join(';');
+    document.body.appendChild(star);
+  }
+})();
+
+// =====================================================
+// CONFIG — THAY URL NÀY BẰNG GOOGLE APPS SCRIPT CỦA BẠN
+// =====================================================
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxH0kV26vmdb-mdSqzGceRmK2P0BzVwRjuW49UZcgb6V7viWF9pxrS3RGbdr9U6lLgpbw/exec"; // Sẽ được load từ localStorage
+var ADMIN_PASSWORD = "admin123"; // Đổi mật khẩu quản trị
+
+// Load saved URL from localStorage
+try {
+  var savedUrl = localStorage.getItem("kyYeu_sheetsUrl");
+  if(savedUrl) GOOGLE_SCRIPT_URL = savedUrl;
+} catch(e) {}
+
+function saveSheetUrl() {
+  var input = document.getElementById("sheetsUrlInput");
+  var url = input.value.trim();
+  var status = document.getElementById("sheetUrlStatus");
+  if(!url) {
+    status.style.color = "#ff4444";
+    status.textContent = "❌ Vui lòng nhập URL!";
+    return;
+  }
+  if(!url.startsWith("https://script.google.com")) {
+    status.style.color = "#ff4444";
+    status.textContent = "❌ URL không hợp lệ! Phải bắt đầu bằng https://script.google.com";
+    return;
+  }
+  GOOGLE_SCRIPT_URL = url;
+  try { localStorage.setItem("kyYeu_sheetsUrl", url); } catch(e){}
+  status.style.color = "var(--green1)";
+  status.textContent = "✓ Đã lưu! Google Sheets đã được kết nối.";
+  setTimeout(function(){ status.textContent = ""; }, 4000);
+}
+
+function copyAppsScript() {
+  var code = document.getElementById("appsScriptCode").innerText;
+  navigator.clipboard.writeText(code).then(function(){
+    showBanner("✓ Đã copy code Apps Script!");
+  }).catch(function(){
+    showBanner("⚠ Không thể copy — hãy chọn và copy thủ công");
+  });
+}
+
+// =====================================================
+// LOCAL STORAGE DATA
+// =====================================================
+var localNames = [];
+try {
+  var stored = localStorage.getItem("kyYeu2026Names");
+  if(stored) localNames = JSON.parse(stored);
+} catch(e) {}
+
+function saveName(name) {
+  var time = new Date().toLocaleString("vi-VN", {timeZone:"Asia/Ho_Chi_Minh"});
+  localNames.push({name:name, time:time});
+  try { localStorage.setItem("kyYeu2026Names", JSON.stringify(localNames)); } catch(e){}
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// =====================================================
+// CLOCK
+// =====================================================
+function tickClock() {
+  var now = new Date();
+  var h = now.getHours().toString().padStart(2,"0");
+  var m = now.getMinutes().toString().padStart(2,"0");
+  var s = now.getSeconds().toString().padStart(2,"0");
+  document.getElementById("hudClock").textContent = h+":"+m+":"+s;
+}
+tickClock(); setInterval(tickClock, 1000);
+
+// =====================================================
+// TICKER
+// =====================================================
+(function(){
+  var items = ["✈ KỶ YẾU 2026","★ THPT CHUYÊN NTT","✦ LỚP 12TIN","► 16.05.2026",
+               "★ CHỤP ẢNH ĐẸP NHẤT","✈ HẸN GẶP BẠN","✦ KỶ NIỆM ĐÁNG NHỚ","► CÙN G NHAU TỎA SÁNG"];
+  var html = "";
+  items.concat(items).forEach(function(t){
+    html += '<span class="ticker-item">'+t.replace("★","<span>★</span>").replace("✈","<span>✈</span>")+'</span>';
+  });
+  document.getElementById("tickerInner").innerHTML = html;
+})();
+
+// =====================================================
+// PIXEL ART HELPERS
+// =====================================================
+function drawPixelRect(ctx, x, y, w, h, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x*4, y*4, w*4, h*4);
+}
+
+function drawPixelAirplane(ctx, ox, oy, scale) {
+  // Scale factor
+  var s = scale || 1;
+  function px(x,y,w,h,c){
+    ctx.fillStyle = c;
+    ctx.fillRect((ox+x)*s,(oy+y)*s,w*s,h*s);
+  }
+  // Body (fuselage)
+  px(8,5,24,6,'#ddeeff');   // main body
+  px(6,6,2,4,'#bbd0ee');    // nose taper
+  px(4,7,2,2,'#99bbdd');    // nose tip
+  px(32,4,4,3,'#bbd0ee');   // tail top
+  px(32,7,4,3,'#bbd0ee');   // tail bot
+  // Windows
+  px(12,6,2,2,'#aaddff');
+  px(16,6,2,2,'#aaddff');
+  px(20,6,2,2,'#aaddff');
+  px(24,6,2,2,'#aaddff');
+  // Stripe
+  px(6,8,26,2,'#ff4444');
+  // Wing (upper)
+  px(14,1,14,4,'#bbd0ee');
+  px(12,2,2,2,'#99bbcc');
+  px(28,2,2,2,'#99bbcc');
+  // Wing underside
+  px(14,11,14,4,'#bbd0ee');
+  px(12,12,2,2,'#99bbcc');
+  px(28,12,2,2,'#99bbcc');
+  // Engine pods
+  px(16,12,6,3,'#aacce0');
+  px(22,13,4,2,'#8aafe0');
+  px(14,13,2,2,'#8aafe0');
+  // Tail fin
+  px(32,2,2,5,'#ddeeff');
+  px(34,3,2,4,'#bbd0ee');
+  // Cockpit
+  px(6,5,4,4,'#77bbff');
+  px(8,6,2,2,'#aaddff');
+}
+
+// =====================================================
+// PIXEL ENVELOPE
+// =====================================================
+function drawEnvelope(ctx) {
+  var W = 120, H = 90;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#fff9e6';
+  ctx.fillRect(2,8,116,80);
+  ctx.strokeStyle = '#d4a843'; ctx.lineWidth = 3;
+  ctx.strokeRect(2,8,116,80);
+  ctx.fillStyle = '#f5d680';
+  ctx.beginPath();
+  ctx.moveTo(2,8); ctx.lineTo(60,50); ctx.lineTo(118,8); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = '#d4a843'; ctx.lineWidth=2; ctx.stroke();
+  ctx.strokeStyle = '#e0c060'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(2,88); ctx.lineTo(60,54); ctx.lineTo(118,88); ctx.stroke();
+  ctx.fillStyle = '#aa1111';
+  ctx.beginPath(); ctx.arc(60,55,14,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#cc2222';
+  ctx.beginPath(); ctx.arc(58,53,8,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#ff5555';
+  ctx.beginPath(); ctx.arc(56,51,4,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#fff3cc';
+  ctx.fillRect(88,14,26,22);
+  ctx.strokeStyle='#d4a843'; ctx.lineWidth=1.5; ctx.strokeRect(88,14,26,22);
+  ctx.fillStyle='#aa8800'; ctx.font='7px Courier New'; ctx.textAlign='center';
+  ctx.fillText('AIR',101,22); ctx.fillText('MAIL',101,31);
+  ctx.strokeStyle='#c4934a'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.arc(74,22,11,0,Math.PI*2); ctx.stroke();
+  ctx.fillStyle='#8b5e00'; ctx.font='6px Courier New'; ctx.textAlign='center';
+  ctx.fillText('NTT',74,20); ctx.fillText('2026',74,27);
+  ctx.fillStyle='#c4934a'; ctx.font='bold 9px Courier New'; ctx.textAlign='center';
+  ctx.fillText('BẤM ĐỂ MỞ', 60, 79);
+  ctx.fillStyle='rgba(255,220,100,0.4)';
+  ctx.beginPath(); ctx.arc(60,55,20,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#8b0000'; ctx.font='bold 13px Courier New'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('🎓', 60, 55);
+}
+
+// Render envelope
+var envCtx = document.getElementById("envCanvas").getContext("2d");
+drawEnvelope(envCtx);
+
+// =====================================================
+// MAIN GAME CANVAS — PIXEL PLANE ANIMATION
+// =====================================================
+var gc = document.getElementById("gameCanvas");
+var gctx = gc.getContext("2d");
+gc.width = window.innerWidth;
+gc.height = window.innerHeight;
+
+var planeX, planeY;
+var planePhase = 0; // 0=entering, 1=flying, 2=dropping letter, 3=waiting for click, 4=letter sent back, 5=celebration
+var planeSpeedX = 1.5;
+var planeOscY = 0;
+var letterDropX, letterDropY;
+var letterVisible = false;
+var letterPhysicsY = 0;
+var letterPhysicsVY = 0;
+var letterTargetY = 0;
+var letterFinalY = 0;
+var flagOffset = 0;
+var flagText = "";
+var celebrationName = "";
+var clouds = [];
+var pixels = []; // pixel confetti
+
+// Initialize plane position
+planeX = -200;
+planeY = window.innerHeight * 0.18; // bay ở vùng mây trên cao
+
+// Generate clouds — cùng vùng với máy bay
+for(var ci=0; ci<8; ci++){
+  clouds.push({
+    x: Math.random() * window.innerWidth,
+    y: 40 + Math.random() * 100,
+    w: 80 + Math.random() * 160,
+    h: 30 + Math.random() * 50,
+    speed: 0.15 + Math.random() * 0.35,
+    alpha: 0.25 + Math.random() * 0.45
+  });
+}
+
+function drawPixelCloud(ctx, x, y, w, h, alpha) {
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = '#c8ddf8';
+  // Pixel cloud = series of rects
+  var pw = 8;
+  for(var xi=0; xi<w; xi+=pw){
+    var ch = h * (0.5 + 0.5 * Math.sin((xi/w)*Math.PI));
+    ctx.fillRect(x+xi, y + h - ch, pw-1, ch);
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawPixelPlane(ctx, x, y, showFlag, flagTxt, userName) {
+  ctx.save();
+  ctx.translate(x, y);
+
+  // Plane width in pixels (s=5, 36 cols) = 180px. Center offset for flip.
+  var s = 5;
+  var planeW = 36*s; // 180
+  var oy = -30;
+
+  // Shadow
+  ctx.globalAlpha = 0.18;
+  ctx.fillStyle = '#001133';
+  ctx.fillRect(0, 50, planeW, 12);
+  ctx.globalAlpha = 1;
+
+  // --- FLIP so nose points RIGHT (plane travels left→right) ---
+  // We draw the plane mirrored: translate to right edge, scale(-1,1)
+  ctx.save();
+  ctx.translate(planeW, 0);
+  ctx.scale(-1, 1);
+
+  function px(px,py,pw,ph,c){
+    ctx.fillStyle=c;
+    ctx.fillRect(px*s, oy+py*s, pw*s, ph*s);
+  }
+  // Body
+  px(8,5,24,6,'#ddeeff');
+  px(6,6,2,4,'#bbd0ee');
+  px(4,7,2,2,'#aaccee');   // ← this is now the NOSE (right side after flip)
+  px(32,4,4,3,'#bbd0ee');  // ← TAIL (left side after flip)
+  px(32,7,4,3,'#bbd0ee');
+  // Windows
+  px(10,6,2,2,'#88ccff');
+  px(14,6,2,2,'#88ccff');
+  px(18,6,2,2,'#88ccff');
+  px(22,6,2,2,'#88ccff');
+  // Red stripe
+  px(6,8,27,2,'#ff4444');
+  // Wings
+  px(14,1,14,4,'#bbd0ee');
+  px(12,2,2,2,'#99bbcc');
+  px(28,2,2,2,'#99bbcc');
+  px(14,11,14,4,'#bbd0ee');
+  px(12,12,2,2,'#99bbcc');
+  px(28,12,2,2,'#99bbcc');
+  // Engines
+  px(16,12,6,3,'#aacce0');
+  px(22,13,4,2,'#8aafe0');
+  // Tail fin
+  px(32,2,2,5,'#ddeeff');
+  px(34,3,2,4,'#bbd0ee');
+  // Cockpit glass (nose side = right after flip = small x values before flip)
+  px(5,5,4,4,'#55aaff');
+  px(6,6,2,2,'#88ccff');
+
+  // Jet exhaust — comes out of TAIL (after flip, tail is left = large x in flipped space)
+  ctx.fillStyle = 'rgba(100,200,255,0.35)';
+  for(var e=0;e<4;e++){
+    ctx.fillRect((36+e*5+Math.random()*3)*s, oy+18+Math.random()*8, s*2, s*1.5);
+  }
+
+  ctx.restore(); // end flip
+
+  // BANNER — chỉ giữ banner vàng, bỏ lá cờ
+  if(showFlag) {
+    var flagY = oy - 12;
+
+    // Dây kéo từ đuôi máy bay
+    ctx.strokeStyle = '#ffdd44';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, oy+20);
+    ctx.lineTo(-16, flagY+22);
+    ctx.stroke();
+
+    // Trailing banner vàng
+    var bannerX = -320;
+    var bannerW = 300;
+    var bannerH = 36;
+    var bannerY = flagY + 4;
+
+    // Nền vàng có viền
+    ctx.fillStyle = 'rgba(255,215,0,0.96)';
+    ctx.fillRect(bannerX, bannerY, bannerW, bannerH);
+    ctx.strokeStyle='#8b5e00'; ctx.lineWidth=2.5;
+    ctx.strokeRect(bannerX, bannerY, bannerW, bannerH);
+
+    // Đường viền trang trí bên trong
+    ctx.strokeStyle='rgba(139,94,0,0.4)'; ctx.lineWidth=1;
+    ctx.strokeRect(bannerX+4, bannerY+4, bannerW-8, bannerH-8);
+
+    // Text
+    ctx.fillStyle = '#2a1400';
+    ctx.font = 'bold 15px Courier New';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    var displayName = userName ? userName.substring(0,14) : "";
+    ctx.fillText("✦ CẢM ƠN " + displayName + " ✦", bannerX + bannerW/2, bannerY + bannerH/2);
+  }
+
+  ctx.restore();
+}
+
+function drawLetterInAir(ctx, lx, ly, fallen) {
+  ctx.save();
+  ctx.translate(lx, ly);
+  var rot = fallen ? 0 : (Math.sin(letterPhysicsY*0.05)*0.3);
+  ctx.rotate(rot);
+  // Pixel envelope (medium — dropping)
+  var sw = 60, sh = 46;
+  ctx.fillStyle = '#fff9e6';
+  ctx.fillRect(-sw/2, -sh/2, sw, sh);
+  ctx.strokeStyle = '#d4a843'; ctx.lineWidth=2;
+  ctx.strokeRect(-sw/2+1, -sh/2+1, sw-2, sh-2);
+  ctx.fillStyle = '#f5d680';
+  ctx.beginPath();
+  ctx.moveTo(-sw/2, -sh/2);ctx.lineTo(0,0);ctx.lineTo(sw/2,-sh/2);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#cc2222';ctx.beginPath();ctx.arc(0,2,4,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+
+// =====================================================
+// LETTER DROP POSITION
+// =====================================================
+function getDropTargetPos() {
+  var cx = window.innerWidth / 2;
+  var cy = window.innerHeight * 0.65;
+  return {x: cx, y: cy};
+}
+
+// =====================================================
+// ANIMATION LOOP
+// =====================================================
+var lastTime = 0;
+function gameLoop(ts) {
+  var dt = ts - lastTime; lastTime = ts;
+  gc.width = window.innerWidth;
+  gc.height = window.innerHeight;
+  gctx.clearRect(0,0,gc.width,gc.height);
+
+  // Draw clouds
+  clouds.forEach(function(c){
+    c.x -= c.speed;
+    if(c.x + c.w < 0) c.x = window.innerWidth + c.w;
+    drawPixelCloud(gctx, c.x, c.y, c.w, c.h, c.alpha);
+  });
+
+  // Oscillation
+  planeOscY += 0.025;
+  var oscOff = Math.sin(planeOscY) * 8;
+
+  // Phase logic
+  if(planePhase === 0) {
+    // Entering from left
+    planeX += 3.5;
+    if(planeX > window.innerWidth * 0.35) {
+      planePhase = 1;
+    }
+  } else if(planePhase === 1) {
+    // Flying across, slow down
+    planeX += planeSpeedX;
+    if(planeSpeedX > 0.6) planeSpeedX -= 0.012;
+    // Drop letter at center
+    if(planeX > window.innerWidth * 0.48 && !letterVisible) {
+      planePhase = 2;
+      var dp = getDropTargetPos();
+      letterDropX = planeX + 120;
+      letterDropY = planeY + oscOff + 20;
+      letterPhysicsVY = 0;
+      letterTargetY = dp.y;
+    }
+  } else if(planePhase === 2) {
+    // Letter dropping
+    planeX += 1.2;
+    letterPhysicsVY += 0.35;
+    letterDropY += letterPhysicsVY;
+    var dp2 = getDropTargetPos();
+    letterDropX += (dp2.x - letterDropX) * 0.05;
+    if(letterDropY >= dp2.y) {
+      letterDropY = dp2.y;
+      letterVisible = true;
+      planePhase = 3;
+      showEnvelope(dp2.x, dp2.y);
+      var ht = document.getElementById("hintText");
+      ht.style.animation = "blink 1.5s ease-in-out infinite";
+      ht.style.opacity = "1";
+    }
+  } else if(planePhase === 3) {
+    // Waiting — plane floats
+    planeX += 0.4;
+    if(planeX > window.innerWidth + 300) planeX = -300;
+  } else if(planePhase === 4) {
+    // Plane re-enters fast carrying flag
+    planeX += 3.5;
+    flagOffset++;
+    if(planeX > window.innerWidth + 300) {
+      planePhase = 5;
+      planeX = -300;
+    }
+  } else if(planePhase === 5) {
+    // Keep looping with flag
+    planeX += 2.2;
+    flagOffset++;
+    if(planeX > window.innerWidth + 300) {
+      planeX = -300;
+    }
+  }
+
+  // Draw plane — same size in all phases
+  if(planePhase === 5 || planePhase === 4) {
+    drawPixelPlane(gctx, planeX, planeY + oscOff, true, flagText, celebrationName);
+  } else {
+    drawPixelPlane(gctx, planeX, planeY + oscOff, false, "", "");
+  }
+
+  // Draw letter in air (phases 2)
+  if(planePhase === 2) {
+    drawLetterInAir(gctx, letterDropX, letterDropY, false);
+  }
+
+  // Pixel confetti
+  drawPixelConfetti();
+
+  requestAnimationFrame(gameLoop);
+}
+requestAnimationFrame(gameLoop);
+
+// =====================================================
+// PIXEL CONFETTI
+// =====================================================
+var confettiParticles = [];
+var confettiColors = ['#ffd700','#ff4444','#44aaff','#44ff88','#ff88ff','#ffaa00','#00ffcc'];
+
+function spawnConfetti(cx, cy, n) {
+  for(var i=0; i<n; i++){
+    confettiParticles.push({
+      x: cx + (Math.random()-0.5)*80,
+      y: cy,
+      vx: (Math.random()-0.5)*6,
+      vy: -4 - Math.random()*6,
+      size: 4 + Math.floor(Math.random()*8),
+      color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
+      life: 1,
+      decay: 0.012 + Math.random()*0.012,
+      rot: Math.random()*Math.PI,
+      rotSpeed: (Math.random()-0.5)*0.15
+    });
+  }
+}
+
+function drawPixelConfetti() {
+  var fxc = document.getElementById("fxCanvas");
+  if(!fxc.__ctx) fxc.__ctx = fxc.getContext("2d");
+  var ctx = fxc.__ctx;
+  fxc.width = window.innerWidth;
+  fxc.height = window.innerHeight;
+  ctx.clearRect(0,0,fxc.width,fxc.height);
+  for(var i=confettiParticles.length-1;i>=0;i--){
+    var p = confettiParticles[i];
+    p.x+=p.vx; p.y+=p.vy; p.vy+=0.18;
+    p.life-=p.decay; p.rot+=p.rotSpeed;
+    if(p.life<=0){confettiParticles.splice(i,1);continue;}
+    ctx.globalAlpha=p.life;
+    ctx.fillStyle=p.color;
+    ctx.save();
+    ctx.translate(p.x,p.y);ctx.rotate(p.rot);
+    ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+    ctx.restore();
+  }
+  ctx.globalAlpha=1;
+}
+
+// =====================================================
+// SHOW/HIDE ENVELOPE
+// =====================================================
+function showEnvelope(x, y) {
+  var env = document.getElementById("letterEnvelope");
+  env.style.display = "block";
+  env.style.left = (x - 60) + "px";
+  env.style.top = (y - 45) + "px";
+  env.style.position = "fixed";
+  env.style.animation = "popEnv 0.6s cubic-bezier(0.34,1.4,0.64,1) both";
+  spawnConfetti(x, y, 30);
+
+  // Đặt hint text bên dưới phong bì (y + 90px = dưới phong bì 90px cao)
+  var hint = document.getElementById("hintText");
+  hint.style.position = "fixed";
+  hint.style.left = "50%";
+  hint.style.transform = "translateX(-50%)";
+  hint.style.top = (y - 45 + 90 + 16) + "px"; // dưới phong bì + khoảng cách
+}
+
+// Add popEnv keyframe
+var styleEl = document.createElement("style");
+styleEl.textContent = "@keyframes popEnv{0%{transform:scale(0) rotate(-20deg);opacity:0}100%{transform:scale(1) rotate(0deg);opacity:1}}";
+document.head.appendChild(styleEl);
+
+function hideEnvelope() {
+  document.getElementById("letterEnvelope").style.display = "none";
+  document.getElementById("hintText").style.opacity = "0";
+}
+
+// =====================================================
+// OPEN / CLOSE LETTER
+// =====================================================
+function openLetter() {
+  var overlay = document.getElementById("letterOverlay");
+  overlay.style.display = "flex";
+  setTimeout(function(){
+    document.getElementById("letterCard").classList.add("open");
+  }, 50);
+  spawnConfetti(window.innerWidth/2, window.innerHeight/2, 30);
+}
+
+function closeLetter() {
+  document.getElementById("letterCard").classList.remove("open");
+  setTimeout(function(){
+    document.getElementById("letterOverlay").style.display = "none";
+  }, 400);
+}
+
+document.getElementById("letterOverlay").addEventListener("click", function(e){
+  if(e.target === this) closeLetter();
+});
+
+// =====================================================
+// SEND NAME
+// =====================================================
+function sendName() {
+  var name = document.getElementById("nameInput").value.trim();
+  if(!name) {
+    document.getElementById("nameInput").focus();
+    document.getElementById("nameInput").style.borderColor="#ff4444";
+    setTimeout(function(){document.getElementById("nameInput").style.borderColor="";},1000);
+    return;
+  }
+  var btn = document.getElementById("sendBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="send-spinner"></span>GỬI...';
+
+  sendToGoogleSheets(name, function() {
+    saveName(name);
+    closeLetter();
+    hideEnvelope();
+    spawnConfetti(window.innerWidth/2, window.innerHeight/2, 60);
+
+    // Phase 4: plane re-enters with flag
+    celebrationName = name;
+    flagOffset = 0;
+    planeX = -400;
+    planePhase = 4;
+
+    setTimeout(function(){
+      // Plane re-enters with flag + banner — NO overlay page
+      planePhase = 5;
+      // Burst confetti
+      for(var i=0;i<10;i++){
+        (function(ii){setTimeout(function(){
+          spawnConfetti(Math.random()*window.innerWidth, Math.random()*window.innerHeight*0.6, 25);
+        }, ii*150);})(i);
+      }
+    }, 2000);
+
+    btn.disabled = false;
+    btn.innerHTML = "GỬI ✈";
+    document.getElementById("nameInput").value = "";
+  });
+}
+
+function sendToGoogleSheets(name, callback) {
+  if(!GOOGLE_SCRIPT_URL) {
+    showBanner("⚠ Chưa cấu hình Google Sheets — Tên đã lưu cục bộ!");
+    setTimeout(callback, 800);
+    return;
+  }
+  var timestamp = new Date().toLocaleString("vi-VN", {timeZone:"Asia/Ho_Chi_Minh"});
+  var url = GOOGLE_SCRIPT_URL + "?name=" + encodeURIComponent(name) + "&time=" + encodeURIComponent(timestamp);
+  fetch(url, {method:"GET", mode:"no-cors"})
+    .then(function(){
+      showBanner("✓ Đã lưu vào Google Sheets!");
+      callback();
+    })
+    .catch(function(){
+      showBanner("⚠ Lỗi kết nối — Tên đã lưu cục bộ!");
+      callback();
+    });
+}
+
+function showBanner(msg) {
+  var b = document.getElementById("sheetsBanner");
+  b.textContent = msg;
+  b.classList.add("show");
+  setTimeout(function(){b.classList.remove("show");},3000);
+}
+
+// =====================================================
+// RESTART
+// =====================================================
+function restartPage() {
+  document.getElementById("thankyouPage").classList.remove("show");
+  celebrationName = "";
+  planeX = -300;
+  planeY = window.innerHeight * 0.18;
+  planePhase = 0;
+  planeSpeedX = 1.5;
+  letterVisible = false;
+  hideEnvelope();
+}
+
+// =====================================================
+// PROFILE PAGE
+// =====================================================
+var allProfileRows = [];
+
+function openProfile() {
+  document.getElementById("profilePage").classList.add("show");
+  loadProfileData();
+}
+function closeProfile() {
+  document.getElementById("profilePage").classList.remove("show");
+}
+
+function loadProfileData() {
+  allProfileRows = localNames.slice().reverse();
+  var today = new Date().toLocaleDateString("vi-VN");
+  var todayCount = allProfileRows.filter(function(r){return r.time&&r.time.indexOf(today)!==-1;}).length;
+  var latest = allProfileRows.length > 0 ? allProfileRows[0].name.substring(0,6) : "—";
+  document.getElementById("statTotal").textContent = allProfileRows.length;
+  document.getElementById("statToday").textContent = todayCount;
+  document.getElementById("statLatest").textContent = latest;
+  renderNameGrid(allProfileRows);
+}
+
+function renderNameGrid(rows) {
+  var grid = document.getElementById("nameGrid");
+  if(rows.length === 0){
+    grid.innerHTML = '<div class="profile-empty">✦ Chưa có ai đăng ký</div>';
+    return;
+  }
+  var html = "";
+  rows.forEach(function(r,i){
+    var init = r.name ? r.name.charAt(0).toUpperCase() : "?";
+    html += '<div class="name-card" style="animation-delay:'+(i*0.04)+'s">'
+      + '<div class="name-avatar">'+escHtml(init)+'</div>'
+      + '<div class="name-info">'
+      + '<div class="name-text">'+escHtml(r.name)+'</div>'
+      + '<div class="name-time">'+escHtml(r.time||"")+'</div>'
+      + '</div></div>';
+  });
+  grid.innerHTML = html;
+}
+
+function filterProfile() {
+  var q = document.getElementById("profileSearch").value.toLowerCase();
+  var filtered = q ? allProfileRows.filter(function(r){return r.name.toLowerCase().indexOf(q)!==-1;}) : allProfileRows;
+  renderNameGrid(filtered);
+}
+
+// =====================================================
+// ADMIN PAGE
+// =====================================================
+var allAdminRows = [];
+
+function openAdmin() {
+  document.getElementById("adminPage").classList.add("show");
+  document.getElementById("adminPassInput").value="";
+  document.getElementById("adminErr").textContent="";
+  document.getElementById("adminLogin").style.display="block";
+  document.getElementById("adminPanel").style.display="none";
+  setTimeout(function(){document.getElementById("adminPassInput").focus();},200);
+}
+function closeAdmin() {
+  document.getElementById("adminPage").classList.remove("show");
+  document.getElementById("adminPanel").style.display="none";
+  document.getElementById("adminLogin").style.display="block";
+}
+function adminLogin() {
+  var pass = document.getElementById("adminPassInput").value;
+  if(pass === ADMIN_PASSWORD) {
+    document.getElementById("adminLogin").style.display="none";
+    document.getElementById("adminPanel").style.display="flex";
+    loadAdminData();
+  } else {
+    document.getElementById("adminErr").textContent = "❌ Mật khẩu không đúng!";
+    document.getElementById("adminPassInput").value="";
+    document.getElementById("adminPassInput").focus();
+  }
+}
+function loadAdminData() {
+  allAdminRows = localNames.slice().reverse();
+  var today = new Date().toLocaleDateString("vi-VN");
+  var todayCount = allAdminRows.filter(function(r){return r.time&&r.time.indexOf(today)!==-1;}).length;
+  var latest = allAdminRows.length>0 ? allAdminRows[0].name.substring(0,6) : "—";
+  document.getElementById("adminCount").textContent = allAdminRows.length + " người";
+  document.getElementById("adminToday").textContent = todayCount;
+  document.getElementById("adminLatest").textContent = latest;
+  // Pre-fill URL input
+  var urlInput = document.getElementById("sheetsUrlInput");
+  if(urlInput && GOOGLE_SCRIPT_URL) urlInput.value = GOOGLE_SCRIPT_URL;
+  var status = document.getElementById("sheetUrlStatus");
+  if(status) {
+    if(GOOGLE_SCRIPT_URL) {
+      status.style.color = "var(--green1)";
+      status.textContent = "✓ Đã kết nối Google Sheets";
+    } else {
+      status.style.color = "#ffaa00";
+      status.textContent = "⚠ Chưa cấu hình — nhập URL để kết nối";
+    }
+  }
+  renderAdminTable(allAdminRows);
+}
+function renderAdminTable(rows) {
+  var body = document.getElementById("adminBody");
+  if(rows.length===0){body.innerHTML='<tr><td colspan="3" style="text-align:center;color:#3a5a8a;padding:20px;">Chưa có dữ liệu</td></tr>';return;}
+  var html="";
+  rows.forEach(function(r,i){
+    var init = r.name ? r.name.charAt(0).toUpperCase() : "?";
+    html+='<tr style="animation:rowSlideIn 0.25s '+(i*0.03)+'s both">'
+      +'<td class="td-num">'+(i+1)+'</td>'
+      +'<td><div class="td-name-wrap"><div class="td-avatar">'+escHtml(init)+'</div><span>'+escHtml(r.name)+'</span></div></td>'
+      +'<td class="td-time">'+escHtml(r.time||"—")+'</td></tr>';
+  });
+  body.innerHTML=html;
+}
+function filterAdmin(){
+  var q=document.getElementById("adminSearch").value.toLowerCase();
+  var filtered=q?allAdminRows.filter(function(r){return r.name.toLowerCase().indexOf(q)!==-1;}):allAdminRows;
+  renderAdminTable(filtered);
+}
+function refreshAdmin(){
+  try{var s=localStorage.getItem("kyYeu2026Names");if(s)localNames=JSON.parse(s);}catch(e){}
+  loadAdminData();
+}
+function exportCSV(){
+  if(allAdminRows.length===0){alert("Chưa có dữ liệu!");return;}
+  var csv="\uFEFF"+"STT,Tên,Thời gian\n";
+  allAdminRows.forEach(function(r,i){
+    csv+=(i+1)+',"'+(r.name||"").replace(/"/g,'""')+'","'+(r.time||"").replace(/"/g,'""')+'"\n';
+  });
+  var blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");a.href=url;a.download="danhsach_kyyeu_2026.csv";a.click();
+  URL.revokeObjectURL(url);
+}
+function openSheets(){
+  if(!GOOGLE_SCRIPT_URL){
+    showBanner("⚠ Chưa cấu hình Google Sheets URL!");
+    return;
+  }
+  window.open("https://docs.google.com/spreadsheets/","_blank");
+}
+
+// =====================================================
+// KEYBOARD SHORTCUTS
+// =====================================================
+document.addEventListener("keydown", function(e){
+  if(e.key==="Escape"){
+    closeLetter();
+    closeProfile();
+    if(document.getElementById("adminPage").classList.contains("show")) closeAdmin();
+  }
+  if(e.key==="Enter" && document.getElementById("adminPage").classList.contains("show")){
+    if(document.getElementById("adminLogin").style.display!=="none") adminLogin();
+  }
+});
+
+// =====================================================
+// RESIZE HANDLER
+// =====================================================
+window.addEventListener("resize", function(){
+  gc.width=window.innerWidth;gc.height=window.innerHeight;
+  var fxc=document.getElementById("fxCanvas");
+  fxc.width=window.innerWidth;fxc.height=window.innerHeight;
+});
+</script>
+</body>
+</html>
